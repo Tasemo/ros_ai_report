@@ -1,0 +1,83 @@
+%----------------------------------------------------------------------------------------
+%	VALUES FOR THE REPORT
+%----------------------------------------------------------------------------------------
+
+\newcommand{\name}{Firstname Lastname} % Author name
+\newcommand{\matrikelnr}{s0XXXXXX} % Author name
+\newcommand{\thesistitle}{AI in der Robotik} % Title of the thesis
+\newcommand{\submissiondate}{XX. Month, Year} % Submission date "Month, year"
+\newcommand{\supervisor}{Patrick Baumann, M.Sc.} % Supervisor name
+%\newcommand{\cosupervisor}{} % Co-Supervisor name, comment this line if there is none
+\newcommand{\bibliographytitle}{Bibliography}
+
+
+%----------------------------------------------------------------------------------------
+%	YOUR PACKAGES (be careful of package interaction)
+%----------------------------------------------------------------------------------------
+
+\usepackage{amsthm,amsmath,amssymb,amsfonts,bbm}% Math symbols
+\usepackage[onehalfspacing]{setspace}% 1.5pt line-space
+\usepackage[stretch=10]{microtype}%smoother letters
+\usepackage{tikz}%vector graphics tikz
+\usepackage{wrapfig}% text around figures
+\usepackage{subfigure}%graphics including subgraphics
+\usepackage{float}%support of H positioning (no automatic placing of elements)
+\usepackage{listings}%source code highlighting
+
+%----------------------------------------------------------------------------------------
+%	YOUR DEFINITIONS AND COMMANDS
+%----------------------------------------------------------------------------------------
+
+% New Commands
+\newcommand{\bea}{\begin{eqnarray}} % Shortcut for equation arrays
+\newcommand{\eea}{\end{eqnarray}}
+\newcommand{\e}[1]{\times 10^{#1}}  % Powers of 10 notation
+
+% Defining a theorem box for Criteria
+\newtheorem{critere}{Criterion}
+\newcommand{\crit}[2]{
+\begin{center}  
+\fbox{ \begin{minipage}[c]{0.9 \textwidth}
+\begin{critere}
+\textbf{\textup{ #1}} --- #2
+\end{critere}
+\end{minipage}  } \end{center}
+}
+
+\renewcommand*{\labelalphaothers}{} % remove + from references when citating
+\renewcommand{\lstlistlistingname}{Source Code Content} % add chapter 'Source Code Conetent'
+
+% additinal colors for coding adaptions
+\definecolor{Ao}{rgb}{0.0, 0.39, 0.0}
+\definecolor{antiquefuchsia}{rgb}{0.57, 0.36, 0.51}
+\definecolor{bostonuniversityred}{rgb}{0.8, 0.0, 0.0}
+% coding adaptions for better visibility (can be overwritten)
+\renewcommand{\lstlistingname}{Code snippet}
+\lstset{
+	language=python,
+	numbers=left,
+	columns=fullflexible,
+	aboveskip=5pt,
+	belowskip=10pt,
+	basicstyle=\small\ttfamily,
+	backgroundcolor=\color{black!5},
+	commentstyle=\color{black},
+	morecomment=[s]{.s}{hape}, % workaround to exclude ".shape"
+	keywordstyle=\color{antiquefuchsia},
+	otherkeywords={self, else},
+	emphstyle=\color{bostonuniversityred},
+	emph={shape,units,name,filters,kernel_size,activation,padding,kernel_initializer,kernel_regularizer,bias_initializer,inputs,outputs,mode,distribution,minval,maxval, callback_args, low, high, limit, window_length, size, mu, theta, sigma},
+	stringstyle=\color{Ao},
+	showspaces=false,
+	showstringspaces=false,
+	showtabs=false,
+	xleftmargin=16pt,
+	xrightmargin=0pt,
+	framesep=5pt,
+	framerule=1pt,
+	frame=leftline,
+	rulecolor=\color{black},
+	tabsize=2,
+	breaklines=true,
+	breakatwhitespace=true
+}

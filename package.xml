@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>ros_ai_report</name>
+  <version>1.0.0</version>
+  <description>A report on voice command recognition using CNNs</description>
+  <maintainer email="tim.oelkers@student.htw-berlin.de">Tim Oelkers</maintainer>
+  <license>MIT</license>
+  <buildtool_depend>catkin</buildtool_depend>
+  <depend>rospy</depend>
+</package>

@@ -1,0 +1,17 @@
+\chapter{Implementation}
+\label{cha:implmentation}
+Code example and referencing: Code \ref{lst:tf_graph_save}. Do NOT use this for large code parts. Therefore use the appendix. This is only for really relevant short-liners.
+\begin{lstlisting}[caption={Agent class - Tensorflow graph}, captionpos=b, label={lst:tf_graph_save}]
+from keras import backend as k
+...
+def __init__(...):
+	...
+	self.graph = k.get_session().graph
+	...
+\end{lstlisting}
+
+\section{Example Section}
+TODO
+
+\section{Example Section}
+TODO

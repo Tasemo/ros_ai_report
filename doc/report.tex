@@ -1,0 +1,177 @@
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[12pt, oneside]{book} % 12 pt font, one-sided book style (each chapter starts on the next page)
+%\documentclass[12pt, twoside]{book} % 12 pt font, two-sided book style (each chapter starts on an odd numbered page)
+
+\usepackage[a4paper, includehead, headheight=0.6cm, inner=3cm ,outer=2.5cm, top=2.5 cm, bottom=2.5cm]{geometry}  % Changing size of document
+\usepackage[english]{babel} % The document is in English
+\usepackage[utf8]{luainputenc} % UTF8 encoding
+\usepackage[T1]{fontenc} % Font encoding
+
+%References
+\usepackage{csquotes} % required by biber
+\usepackage[style=alphabetic, backend=biber, bibencoding=utf8]{biblatex}
+\addbibresource{references/report_bibliography.bib}
+
+\usepackage[table,xcdraw]{xcolor} % define colors with label
+
+\usepackage{graphicx} % For including images
+\graphicspath{{./resources/}} % Specifies the directory where pictures are stored
+
+\usepackage{longtable} % tables that can span several pages
+\usepackage[bf]{caption} % caption: FIG in bold
+\usepackage{fancyhdr} % For the headers
+
+\newcommand{\numberedchapter}{ % Preparation for numbered chapters
+	\cleardoublepage % To make sure the previous headers are passed
+	\fancyhead[RE]{{\bfseries \leftmark}}% Headers for left pages
+	\fancyhead[LO]{{\bfseries \rightmark}}}% Headers for right pages
+\newcommand{\unnumberedchapter}[1]{ % Preparation for unnumbered chapters
+	\cleardoublepage % To make sure the previous headers are passed
+	\addcontentsline{toc}{chapter}{#1} % Also adds the chapter name to the Contents
+	\fancyhead[RE]{{\bfseries #1}} % Headers for left pages
+	\fancyhead[LO]{}}%Headers for right pages
+
+\usepackage{emptypage} % No headers on an empty page
+
+\usepackage{eso-pic} % For the background picture on the title page
+\newcommand\BackgroundPic{%
+\put(-180,-160){%
+\parbox[b][\paperheight]{\paperwidth}{%
+\vfill
+\centering
+\includegraphics[width=200px]{logos/htw_berlin.jpg}%
+\vfill
+}}}
+
+\usepackage{hyperref} % Adds clickable links at references
+
+%----------------------------------------------------------------------------------------
+%	ADD YOUR CUSTOM VALUES, COMMANDS AND PACKAGES
+%----------------------------------------------------------------------------------------
+
+% Open Preamble/mydefinitions.tex and enter some values (name, thesis title...) 
+% and include your own custom LaTeX functions and packages
+
+\input{preamble/definitions}
+
+\begin{document}
+
+%----------------------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\pagestyle{empty} % No page numbers
+\frontmatter % Use roman page numbering style (i, ii, iii, iv...) for the preamble pages
+
+\begin{titlepage}
+\AddToShipoutPicture*{\BackgroundPic}
+\begin{center}
+\vfill
+{\large \scshape University of Applied Sciences Berlin\textsl{}}\\[1.4cm]
+{\Large Report}\\[0.5cm]
+\rule{\textwidth}{1.5pt}\\[0cm]
+{\huge \bfseries \thesistitle \par \ }\\[-0.5cm]
+\rule{\textwidth}{1.5pt}\\[2.5cm]
+\hfill  by\\[1cm]
+\hfill  {\large \bfseries\name}\\
+\hfill  {\large \bfseries\matrikelnr}\\
+\vfill
+{\hfill \large Supervisor: \textbf{\supervisor}} \\ 
+\ifx\cosupervisor\undefined\else{\hfill \large Co-Supervisor: \textbf{\cosupervisor}} \\ \fi
+\vspace{1cm}
+\hfill  \submissiondate
+\end{center}
+\end{titlepage}
+
+%----------------------------------------------------------------------------------------
+%	PREAMBLE PAGES (comment out unnecessary pages)
+%----------------------------------------------------------------------------------------
+
+\pagestyle{fancy} % Changes the headers
+\renewcommand{\chaptermark}[1]{ \markboth{#1}{}} % Getting the chapter name right
+\renewcommand{\sectionmark}[1]{\markright{\thesection\; #1}} % Getting the section name right
+\fancyhf{}% Clears header and footer
+\fancyhead[RO,LE]{\thepage} % page number on the outside of headers
+
+\input{preamble/abstract}
+
+%----------------------------------------------------------------------------------------
+%	LIST OF CONTENTS/FIGURES/TABLES
+%----------------------------------------------------------------------------------------
+
+\unnumberedchapter{Contents}
+\tableofcontents % Write out the Table of Contents
+
+%----------------------------------------------------------------------------------------
+%	THESIS MAIN TEXT - CHAPTERS
+%----------------------------------------------------------------------------------------
+
+\addtocontents{toc}{\vspace{2em}} % Add a gap in the Contents, for aesthetics
+\mainmatter % Begin numeric (1,2,3...) page numbering
+
+% Import your chapters here
+\numberedchapter
+\input{text/introduction}
+\input{text/fundamentals}
+\input{text/conception}
+\input{text/implementation}
+\input{text/evaluation}
+\input{text/conclusion}
+
+% clear page and begin capital roman numbering
+\clearpage
+\pagenumbering{Roman}
+
+%----------------------------------------------------------------------------------------
+%	FIGURES, TABLES & CODINGS
+%----------------------------------------------------------------------------------------
+
+% List of Figures
+\listoffigures
+\addcontentsline{toc}{chapter}{List of Figures}
+\newpage
+% List of Tables
+\listoftables
+\addcontentsline{toc}{chapter}{List of Tables}
+\newpage
+% Source Code Content
+\lstlistoflistings 
+\addcontentsline{toc}{chapter}{Source Code Content}
+\newpage
+
+%----------------------------------------------------------------------------------------
+%	BIBLIOGRAPHY
+%----------------------------------------------------------------------------------------
+
+% filters are not necessary here but kept due copy-paste
+\defbibfilter{scientific}{
+	type=article or
+	type=inbook or
+	type=book or
+	type=unpublished or
+	type=inproceedings or
+	type=incollection or
+	type=manual or
+	type=phdthesis
+}
+
+\printbibliography[heading=bibintoc, filter=scientific, title={\bibliographytitle}]\clearpage
+\printbibliography[heading=bibintoc, keyword={online}, title={Online References}]\clearpage
+\printbibliography[heading=bibintoc, keyword={image}, title={Image References}]\clearpage
+
+%----------------------------------------------------------------------------------------
+%	APPENDICES
+%----------------------------------------------------------------------------------------
+
+\addtocontents{toc}{\vspace{2em}} % Add a gap in the Contents, for aesthetics
+\appendix % Starts of appendices
+
+\numberedchapter
+\input{appendix/appendixA}
+%\input{MainText/appendixB}
+%\input{MainText/appendixC}
+
+\end{document}  
