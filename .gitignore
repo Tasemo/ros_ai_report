@@ -1,4 +1,6 @@
 __pycache__
+SpeechCommands/
+cache/
 *.aux
 *.bcf
 *.lof
@@ -8,3 +10,4 @@ __pycache__
 *.out
 *.run.xml
 *.toc
+*.tar.gz
