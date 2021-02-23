@@ -1,0 +1,10 @@
+<launch>
+  <node name="ai" pkg="ros_ai_report" type="ai.py" output="screen"/>
+  <node name="microphone" pkg="ros_ai_report" type="microphone.py" output="screen"/>
+  <node name="processor" pkg="ros_ai_report" type="processor.py" output="screen"/>
+  <node name="audio_capture" pkg="audio_capture" type="audio_capture" output="screen">
+    <param name="channels" value="1"/>
+    <param name="sample_rate" value="8000"/>
+    <param name="format" value="wave"/>
+  </node>
+</launch>

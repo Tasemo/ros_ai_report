@@ -1,6 +1,7 @@
 __pycache__
 SpeechCommands/
 cache/
+build/
 *.aux
 *.bcf
 *.lof
