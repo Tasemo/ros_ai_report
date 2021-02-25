@@ -8,10 +8,15 @@ find_package(
   rospy
   audio_capture
   std_msgs
-  audio_common_msgs  
+  audio_common_msgs
 )
 
 catkin_python_setup()
+
+add_service_files(
+  FILES
+  CommandPrediction.srv
+)
 
 add_message_files(
   FILES

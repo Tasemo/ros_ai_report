@@ -2,6 +2,7 @@
 
 import torch
 import torchaudio
+import pickle
 import matplotlib.pyplot as plt
 from dataset import DataSetType, DataSubSet
 from model import Model
@@ -42,8 +43,8 @@ def testModel():
             data, target = data.to(device), target.to(device)
             output = model(transform(data))
             total_loss += loss_fn(output.squeeze(), target).item()
-            prediced = output.argmax(dim=-1)
-            correct += prediced.squeeze().eq(target).sum().item()
+            prediced = output.argmax().squeeze()
+            correct += prediced.eq(target).sum().item()
     data_size = len(test_loader.dataset)
     total_loss /= data_size
     test_losses.append(total_loss)
@@ -56,14 +57,21 @@ def savePlot():
     plt.plot(train_losses, label="Training Set")
     plt.plot(test_losses, label="Test Set")
     plt.legend()
-    plt.savefig("model_losses.svg")
+    plt.savefig("model/model_losses.svg")
     plt.close()
 
+def saveMetadata():
+    metadata = {}
+    metadata["sample_rate"] = sample_rate
+    metadata["labels"] = labels
+    with open("model/metadata", "wb") as file:
+        pickle.dump(metadata, file)
+    
 if __name__ == "__main__":
     sample_rate = 8000
     batch_size = 512
     num_workers = 10
-    epochs = 4
+    epochs = 5
     train_set = DataSubSet(DataSetType.TRAINING)
     test_set = DataSubSet(DataSetType.VALIDATION)
 
@@ -96,5 +104,6 @@ if __name__ == "__main__":
         trainModel()
         testModel()
         scheduler.step()
-    torch.save(model.state_dict(), "trainedModel.pt")
+    torch.save(model.state_dict(), "model/trainedModel.pt")
+    saveMetadata()
     savePlot()
