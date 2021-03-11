@@ -1,17 +1,48 @@
 \chapter{Implementation}
-\label{cha:implmentation}
-Code example and referencing: Code \ref{lst:tf_graph_save}. Do NOT use this for large code parts. Therefore use the appendix. This is only for really relevant short-liners.
-\begin{lstlisting}[caption={Agent class - Tensorflow graph}, captionpos=b, label={lst:tf_graph_save}]
-from keras import backend as k
-...
-def __init__(...):
-	...
-	self.graph = k.get_session().graph
-	...
+
+\section{Model Training}
+The implementation for the model training is based on a tutorial on command recognition by the pytorch team\cite{tutorial}. The first step is to create a training and 
+testing subsets of the whole dataset, that got downloaded and saved locally if needed. The testing and validation filenames are stored in specific files, everything not
+listed in these files is supposed to be for training. The iteration and downloading of these files is done by the SPEECHCOMMANDS class provided by torchaudio. The dataset class
+also has some methods to get the labels, the amount of files and the sample rate of the subset. As these methods require iteration over all files and thus take some time to compute, 
+the results were memoized by implementing a file based cache with the help of pythons object serialization (pickle). This speeds up consecutive model trainings. One datapoint
+then contains the waveform, the sample rate, the label, a speaker id and the label number. As I am only able to do the training on the CPU, the audio gets resampled
+to 8kHz to improve training time. We then use a standard torch DataLoader and specify a batch count, the number of workers and that the data should be shuffled after each
+epoch so that the order is not affecting the model in any way. A so called collate function is also defined that pads the waveforms with zeroes so that all have the same length, encodes
+the label as the index in the label array and throws away the rest of the unnwanted data in the dataset (like the sample rate). The model is implemented according to section \ref{model} with
+a input size equal to the number of labels. We use the Adam optimizer with a relatively high learning rate of 0.01 and a small weight decay of 0.0001 as in the original paper \ref{dai2016deep}.
+The loss function used is called NLLLoss, which is often used in 1D classification problems. The model is then trained and tested for 6 epochs. After that, the model itself 
+and metadata about it (labels and sample rate) are saved to disk, together with a graph showing the accuracy and the loss for each epoch.
+
+\section{Evaluation Environment}
+All nodes are started via the following launch file. It describes where the nodes are located and how they should be configured. For the audio_capture node, we have to
+match the setup from the original dataset as closely as possible. Thats why we use the WAVE audio format, as it stores the data uncompressed. We also use mono audio
+and store the data in the 16 bit little endian format. Even though the audio will be resampled to 8kHz to fit the models sample rate, the initial sample rate should
+be as high as possible as during resampling, the average is calculated and we don´t want the higher variation during lower sample rates. The default bitrate set by
+the \texttt{audio_capture} package has to be overwritten to match the expected amount of data.
+
+\lstset{language=XML}
+\begin{lstlisting}
+<launch>
+  <node name="ai" pkg="ros_ai_report" type="ai.py" output="screen"/>
+  <node name="microphone" pkg="ros_ai_report" type="microphone.py" output="screen"/>
+  <node name="processor" pkg="ros_ai_report" type="processor.py" output="screen"/>
+  <node name="audio_capture" pkg="audio_capture" type="audio_capture" output="screen">
+    <param name="bitrate" value="256"/>
+    <param name="channels" value="1"/>
+    <param name="sample_rate" value="16000"/>
+    <param name="format" value="wave"/>
+    <param name="sink" value="appsink"/>
+    <param name="sample_format" value="S16LE"/>
+  </node>
+</launch>
 \end{lstlisting}
 
-\section{Example Section}
-TODO
-
-\section{Example Section}
-TODO
+The microphone node then stores the received data in memory when a specific key is pressed and joins it together when pressed again. It also calculates the
+sample width by extracting the information from the sample format. The processor node receives the aggregated data and writes it to file using the wave module
+of the python standard library. This is sadly needed, as torchaudio does not support loading of file-like objects and only expects a string as a file path. The 
+needed metadata like sample rate and sample width are received from the microphone node. The ai node loads the model and its metadata from disk. When a request
+comes in, it loads the file previously created, resamples the audio to the models sample rate and predicts the command using the model. As the model applies a softmax
+function at the end, the data represents the logarithm of the probability of being a certain command. That means, that the highest number is the predicted output
+and by applying the exponential function, the probability is calculated. As the highest element is just the index of the command, the actual command has to
+be found in the label array stored in the models metadata. The entire process is repeated until the user terminates the program.

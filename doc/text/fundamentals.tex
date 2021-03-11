@@ -1,14 +1,37 @@
 \chapter{Fundamentals}
-TODO
 
-\section{Example section} 
-Example figure \ref{img:cnn_example_network} with citation
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.95\textwidth]{resources/cnn/typical_cnn}
-	\caption{Exemplary CNN architecture \cite{typical_cnn_img}}
-	\label{img:cnn_example_network}
-\end{figure}
+\section{Robot Operating System}
+ROS (Robot Operating System) is an open-source meta operating system. It runs on top of Unix based systems and 
+provides abstraction over process management, low-level communication and hardware. It also provides tools and 
+libraries to develop applications in the field of robotics and distributed systems. ROS is build on the concept 
+of creating a (possibly distributed) peer-to-peer network of nodes. A node is a single, modular process that 
+should perform a dedicated task, which is implemented using C++ (roscpp) or Python (rospy). All nodes register 
+themselfs at the ROS master, which serves as a nameserver and processer manager to the rest of the network. 
+Nodes communicate which each other using ROS messages, which are data structures that define 
+the type of data that is passed. The communication is usually based on ROS topics, 
+which implement an asynchronous publish-subscribe pattern so that nodes are truly decoupled. 
+If direct, synchronous communication with an immediate response is needed, ROS services can be used.
 
-\section{Example section}
-TODO
+\section{Neural Networks}
+Neural networks are a emulation of a human brain with inter-connected nodes (neurons) with weighted edges (synapses). 
+The learning part comes from the process of altering each weight after each evaluation to better map inputs to their 
+expected outputs. This is called supervised learning and inputs with known outputs have to be available for that.
+During the forward pass, the data passes through the network while the weights are applied. To achieve non-linear mappings, 
+an activation function is applied to inputs between each layer. After that, the error to the expected value is 
+calculated with a predefined loss function and the weights are updated accoring to a predefined optimizer in a process 
+called back-propagation. The process is repeated for a certain number of epochs so that the output gets closer and closer 
+to the expected value. After the training, the model can be used on unknown input.
+
+\subsection{Fully Connected Neural Network}
+A fully connected network is a type of network where each node of one layer is connected to each node on the following layer.
+It is often divided into a input layer, multiple hidden layer and one output layer, which has to have the same number
+of nodes as the amount of classes in the classification.
+
+\subsection{Convolutional Neural Networks}
+Convolulation neural networks are often used in classification problems and are a specialisation of full connected neural networks. They are escpecially used 
+in image and audio classification. It tries to find features or patterns in the provided data by removing noise and extracting data relevant for the actual target. 
+They are constructed with a convolutional layer and a pooling layer. The convolutional parts moves a kernel filter over the input matrix and calculates the inner product of
+surrounding datapoints. This creates an overlap and helps neighboring neurons react to similiar data (e.g. similiar frequencies in audio data). In the pooling layer, 
+the amount of data gets reduced, for example by using max-pooling, a process where only the most active neuron in a certain area is kept and the rest being discarded.
+This prevents the model from overfitting (valueing data not actualy relevant for the classification task) and improves training times. The data, now reduced to
+its features, is then passed through a fully connected layer for the actual classification.

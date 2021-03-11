@@ -1,18 +1,25 @@
 \chapter{Introduction}
-examples citations:
-\\
-scientific \cite{doi:10.1162/neco.1989.1.4.541}
-\\
-general online \cite{LSVRC}
-\\
-git \cite{chollet2015}
-\\
 
 \section{Motivation}
-TODO
+Speech recognition systems gained immense popularity over the last years with almost every big tech company (Amazon, Google, Apple, Microsoft, etc.)
+developing their own systems. And since spoken language is very complex and intend can be given in many different ways, these systems are hugely complex
+and rely on the power of the cloud for evaluation. While these systems require huge amount of ressources and expertise to develop, command recognition 
+is a simpler subset of speech recognition that should achievable more realisticly. It is also important, that all current speech recognition systems listen
+for a specific command ("Hey Google", "Alexa", etc.) as a trigger to start analyzeing, so its usefullness is still present in these complex sytems.
+But still, human voice is incredibly diverse and even the voice of one speaker or pronounciations of specific commands can change very rapidly, so the
+usefulness of these simpler systems has to evaluated in the first place. And if successful, this projects can help to cut the dependency on data collecting companies
+by running the command recognition locally.
 
 \section{Project Objective}
-TODO
+This projects aims to develop a human command recognition system using machine learning. The scope should be limited to
+simple and short commands and its usefulness should be evaluated in a realistic, imperfect environment. This includes testing 
+the model with a real microphone in a noisy environment with multiple speakers. It should be also evaluated for multiple people
+with different voice tones. The system should be able to run on a middle class computer. The main evaluation aspect is the accuracy of the trained
+model, the training itself (e.g. training time) should not be evaluated.
 
 \section{Proceeding and Structure of the Work}
-TODO
+The first step will be focused on research on the field of command recognition. A specific type of machine learning has to be selected and
+the design has to be considered before the implementation. Ideally, a existing model has already been developed and this projects builds on top of it.
+The implementation will focus on two different parts. The first one on the training of the model and the second one on the building
+of an evaluation environment and the evaluation itself. Here, a libary for getting audio data from the microphone has to be found. The data found
+during the evaluation has to be presented in an intuitive and expressive way.
