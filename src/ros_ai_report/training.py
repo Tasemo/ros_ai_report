@@ -65,14 +65,14 @@ def savePlot():
     plt.plot(train_losses, label="Training Set")
     plt.plot(test_losses, label="Test Set")
     plt.legend()
-    plt.savefig("model/model_losses.svg")
+    plt.savefig("model/model_losses.png")
     plt.close()
     plt.xlabel("Epoch")
     plt.ylabel("Accuracy")
     plt.plot(train_accuracy, label="Training Set")
     plt.plot(test_accuracy, label="Test Set")
     plt.legend()
-    plt.savefig("model/model_accuracies.svg")
+    plt.savefig("model/model_accuracies.png")
     plt.close()
 
 def saveMetadata():

@@ -11,8 +11,8 @@ The dataset also contains audio files containing common background noise, that c
 training, testing and validation, specified by specific file lists in the same folder.
 
 \section{Model} \label{model}
-The model will be a deep convolutional neural network with 5 convolutional layers described as M5 \cite{dai2016deep}. This was choses as they claim a reasonable high accurary of
-over 60% in a 10 class audio classification with a training time of a minute per epoch. They use a very high sampling rate of 32kHz and a very aggresive reduction of the temporal
+The model will be a deep convolutional neural network with 5 convolutional layers described as M5\cite{dai2016deep}. This was choses as they claim a reasonable high accurary of
+over 60\% in a 10 class audio classification with a training time of a minute per epoch. They use a very high sampling rate of 32kHz and a very aggresive reduction of the temporal
 resolution in the first layer with a kernel size (or receptive field) of 80, a stride of 4 and a ouput size of 128. After each layer, a batch normalization
 and a maxpooling of size 4 is performed, further reducing the feature maps. After the first layer, the kernel size is reduced to a more normal size of 3 and the stride reduced to 1.
 The heavy reduction of resolution is complemented by a doubling of the amount of filters each layer. They use ReLU as the activation function. While most classification
@@ -20,8 +20,8 @@ problems use multiple connected layers after the convolutional layers, the autho
 use a global average pooling to reduce the feature maps to a single dimension. At the end, a softmax function is applied.
 
 \section{Audio Capture} \label{audio_capture}
-As the quality should be evaluated with a real microphone, the \texttt{audio_capture} ROS package is used for this project. It can be started as a ROS node
-and exposes the two topics \texttt{/audio} and \texttt{/audio_info}. The first contains the raw audio data as unsigned 8 bit arrays, the second contains metadata about
+As the quality should be evaluated with a real microphone, the audio\_capture ROS package is used for this project. It can be started as a ROS node
+and exposes the two topics /audio and /audio\_info. The first contains the raw audio data as unsigned 8 bit arrays, the second contains metadata about
 how the data should be interpreted. Concretly, it contains the number of channels, the sample rate, the bitrate, the sample format and the encoding format.
 How the data correlates to the sampled data is controlled via the encoding format (e.g. 16LE means that two bytes in the little endian format make up one sample).
 The data for each channel is stored in an interleaved format and contains no header information. The sample rate specifies how often the analog audio signal from
@@ -40,7 +40,7 @@ The following image shows a graph of the architecture and how the nodes interact
 \end{figure}
 
 As described in section \ref{audio_capture}, the raw audio data and metadata get sent to two topics that are subscribed by the microphone node. It is responsible 
-for recording the data when a specific user input has been made. Once another input was made, the data has to be aggregated and sent to the \texttt{audio_data} topic. It is 
+for recording the data when a specific user input has been made. Once another input was made, the data has to be aggregated and sent to the audio\_data topic. It is 
 subscribed by the processor node, which handles the necessary conversions so that it is compatible with the input of the model. It then also invokes the ai service
 which predicts the command and sends it back, together with the probability. To do that, the ai node has to load the pretrained model and metadata about the
 used model like the labels it can predict and the used sample rate. The predicted command will then be shown on the console for now.

@@ -10,16 +10,16 @@ then contains the waveform, the sample rate, the label, a speaker id and the lab
 to 8kHz to improve training time. We then use a standard torch DataLoader and specify a batch count, the number of workers and that the data should be shuffled after each
 epoch so that the order is not affecting the model in any way. A so called collate function is also defined that pads the waveforms with zeroes so that all have the same length, encodes
 the label as the index in the label array and throws away the rest of the unnwanted data in the dataset (like the sample rate). The model is implemented according to section \ref{model} with
-a input size equal to the number of labels. We use the Adam optimizer with a relatively high learning rate of 0.01 and a small weight decay of 0.0001 as in the original paper \ref{dai2016deep}.
+a input size equal to the number of labels. We use the Adam optimizer with a relatively high learning rate of 0.01 and a small weight decay of 0.0001 as in the original paper \cite{dai2016deep}.
 The loss function used is called NLLLoss, which is often used in 1D classification problems. The model is then trained and tested for 6 epochs. After that, the model itself 
 and metadata about it (labels and sample rate) are saved to disk, together with a graph showing the accuracy and the loss for each epoch.
 
 \section{Evaluation Environment}
-All nodes are started via the following launch file. It describes where the nodes are located and how they should be configured. For the audio_capture node, we have to
+All nodes are started via the following launch file. It describes where the nodes are located and how they should be configured. For the audio\_capture node, we have to
 match the setup from the original dataset as closely as possible. Thats why we use the WAVE audio format, as it stores the data uncompressed. We also use mono audio
 and store the data in the 16 bit little endian format. Even though the audio will be resampled to 8kHz to fit the models sample rate, the initial sample rate should
 be as high as possible as during resampling, the average is calculated and we don´t want the higher variation during lower sample rates. The default bitrate set by
-the \texttt{audio_capture} package has to be overwritten to match the expected amount of data.
+the audio\_capture package has to be overwritten to match the expected amount of data.
 
 \lstset{language=XML}
 \begin{lstlisting}

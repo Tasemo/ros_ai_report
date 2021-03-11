@@ -1,5 +1,39 @@
 \chapter{Evaluation}
 
-First of all, the accuracy of the model was tested agaist the testing subset provided by the used dataset. The following imagees show the loss (left) and
+First of all, the accuracy of the model was tested agaist the testing subset provided by the used dataset. The following groups of images show the loss (left) and
 the accuracy (right) at each epoch.
 
+\begin{figure}[H]
+\centering
+\begin{minipage}{.45\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{model_losses_default.png}
+  \caption{Default Model Losses}
+\end{minipage}
+\begin{minipage}{.45\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{model_accuracies_default.png}
+  \caption{Default Model Accuracies}
+\end{minipage}
+\end{figure}
+
+Interestingly, the testing accuracy seems to fluctuate and even decreases by a bit at the end while the training accuracy still keeps growing. But still, with
+the testing dataset reaching a 78.1\% accuracy and the training dataset reaching a accuracy of 82.5\%, the goal is definetly reached. For reference, the same model
+is tested against the validation dataset to see if there are differences in data quality.
+
+\begin{figure}[H]
+\centering
+\begin{minipage}{.45\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{model_losses_validation.png}
+  \caption{Default Model Losses}
+\end{minipage}
+\begin{minipage}{.45\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{model_accuracies_validation.png}
+  \caption{Default Model Accuracies}
+\end{minipage}
+\end{figure}
+
+Here, a bit smoother curve for the validation dataset can be seens with the training set reaching 82.9\% and the validation set reaching 82.2\%. With the relativly small epoch
+count and it being relativly close to the testing accuracy, it is concluded that no difference in data quality exists.
