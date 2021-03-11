@@ -8,12 +8,12 @@ the accuracy (right) at each epoch.
 \begin{minipage}{.45\textwidth}
   \centering
   \includegraphics[width=\linewidth]{model_losses_default.png}
-  \caption{Default Model Losses}
+  \caption{Default Model Losses - Training}
 \end{minipage}
 \begin{minipage}{.45\textwidth}
   \centering
   \includegraphics[width=\linewidth]{model_accuracies_default.png}
-  \caption{Default Model Accuracies}
+  \caption{Default Model Accuracies - Training}
 \end{minipage}
 \end{figure}
 
@@ -26,14 +26,29 @@ is tested against the validation dataset to see if there are differences in data
 \begin{minipage}{.45\textwidth}
   \centering
   \includegraphics[width=\linewidth]{model_losses_validation.png}
-  \caption{Default Model Losses}
+  \caption{Default Model Losses - Validation}
 \end{minipage}
 \begin{minipage}{.45\textwidth}
   \centering
   \includegraphics[width=\linewidth]{model_accuracies_validation.png}
-  \caption{Default Model Accuracies}
+  \caption{Default Model Accuracies - Validation}
 \end{minipage}
 \end{figure}
 
 Here, a bit smoother curve for the validation dataset can be seens with the training set reaching 82.9\% and the validation set reaching 82.2\%. With the relativly small epoch
-count and it being relativly close to the testing accuracy, it is concluded that no difference in data quality exists.
+count and it being relativly close to the testing accuracy, it is concluded that no difference in data quality exists. In the next step, the the model is evaluated
+with background noise. The following table shows the maximum accuracies for different noises provided by the dataset mixed into the original testing audio at different percentages.
+
+\begin{table}[H]
+  \begin{center}
+    \begin{tabular}{l|l}
+      Percentage & Exercise Bike & Running Tap & White Noise\\\hline
+      50 & 76.9 & 68.8 & 70.1\\
+      75 & 66.1 & 62.8 & 55.9\\
+    \end{tabular}
+    \caption{Background Noise Accuracies}
+  \end{center}
+\end{table}
+
+TODO: constant noise, no sudden spikes and full canceling of original audio, no guarantee that amplitude (audio volume) is the same, so might not be equal parts mixed togther
+TODO: still shows great 

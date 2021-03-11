@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 
+import os
 import torch
 import torchaudio
 import pickle
 import matplotlib.pyplot as plt
 from dataset import DataSetType, DataSubSet
 from model import Model
+from background import BackgroundNoise
 
 def collate_fn(batch):
     tensors, targets = [], []
@@ -48,7 +50,7 @@ def testModel():
     with torch.no_grad():
         for batch_id, (data, target) in enumerate(test_loader):
             data, target = data.to(device), target.to(device)
-            output = model(transform(data))
+            output = model(transform(noise(data)))
             total_loss += loss_fn(output.squeeze(), target).item()
             prediced = output.argmax(dim=-1).squeeze()
             correct += prediced.eq(target).sum().item()
@@ -93,6 +95,7 @@ if __name__ == "__main__":
     labels = train_set.get_labels()
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     transform = torchaudio.transforms.Resample(orig_freq=train_set.get_sample_rate(), new_freq=sample_rate).to(device)
+    noise = BackgroundNoise(os.path.join(train_set._path, "_background_noise_/white_noise.wav"), 0.75)
 
     train_loader = torch.utils.data.DataLoader(train_set,
         batch_size=batch_size,
