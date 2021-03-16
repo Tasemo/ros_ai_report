@@ -4,9 +4,12 @@
 that is not the case for the data coming from the microphone, 
 * amplitude is also important, maybe its training on that as well
 * the model took the waveform at specifc times into consideration, not fully based on the overall structure of the wave
+* noise does not effect the prediction too much if it is relativly constant
 
 \section{Summary}
 TODO
 
 \section{Future Work}
-TODO
+More work has to be done on transforming the data to the format the model was trained on. It is simply not enough to feed it audio data with
+a different amplitude and a different timing. The high fluctuation in accuracies should be evaluated in more detail as well as no conclusive reason for that
+was found in this report.
