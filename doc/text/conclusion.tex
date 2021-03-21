@@ -1,13 +1,15 @@
 \chapter{Conclusion}
-* test accuracy very good with provided test data
-* length is really important for training, original data is aligned and even padded with zeroes so that all have the same length,
-that is not the case for the data coming from the microphone, 
-* amplitude is also important, maybe its training on that as well
-* the model took the waveform at specifc times into consideration, not fully based on the overall structure of the wave
-* noise does not effect the prediction too much if it is relativly constant
+The trained model had really good accuracies on the provided test data that matched the data it was trained on. But feeding it unstructured data
+from a real microphone lead to disappointing results. The biggest problems are the different length and timings of the waveform. The CNN did not do a good enough
+job to abstract the general structure of the wave and focused on specific points. The test data was of couse aligned and padded with zeroes so that the problem was not
+visible there. Also, the different ampltitudes of the waves probably influenced the accuracy, but applying the background noise and still getting good results shows, that
+it has a lower effect than the problem with different timings. This is at least the case for relativly constant noise. All in all, it was shown that a local command
+recognition system can work with a high enough accuracy, but more work is neccesary to achieve that on raw data.
 
 \section{Summary}
-TODO
+We set our task to implement and evaluate a command recognition system using machine learning. We used a very deep convolutional neural network and trained it
+on the "SpeechCommands" dataset. We evaluated the model using the provided test data and implemented a realistic evaluation enviroment using ROS. We tested the model
+with a real microphone and got the recognition working, but with a poor accuracy.
 
 \section{Future Work}
 More work has to be done on transforming the data to the format the model was trained on. It is simply not enough to feed it audio data with

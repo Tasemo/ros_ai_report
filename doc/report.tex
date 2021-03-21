@@ -10,12 +10,8 @@
 \usepackage[utf8]{luainputenc} % UTF8 encoding
 \usepackage[T1]{fontenc} % Font encoding
 
-%References
-\usepackage{csquotes} % required by biber
-\usepackage[style=alphabetic, backend=biber, bibencoding=utf8]{biblatex}
-\addbibresource{references/report_bibliography.bib}
 
-\usepackage[table,xcdraw]{xcolor} % define colors with label1
+\usepackage[table,xcdraw]{xcolor} % define colors with la\dfrac{•}{•}bel1
 
 \usepackage{graphicx} % For including images
 \graphicspath{{./resources/}} % Specifies the directory where pictures are stored
@@ -132,46 +128,16 @@
 % List of Figures
 \listoffigures
 \addcontentsline{toc}{chapter}{List of Figures}
-\newpage
 % List of Tables
 \listoftables
 \addcontentsline{toc}{chapter}{List of Tables}
-\newpage
-% Source Code Content
-\lstlistoflistings 
-\addcontentsline{toc}{chapter}{Source Code Content}
-\newpage
 
 %----------------------------------------------------------------------------------------
 %	BIBLIOGRAPHY
 %----------------------------------------------------------------------------------------
 
-% filters are not necessary here but kept due copy-paste
-\defbibfilter{scientific}{
-	type=article or
-	type=inbook or
-	type=book or
-	type=unpublished or
-	type=inproceedings or
-	type=incollection or
-	type=manual or
-	type=phdthesis
-}
-
-\printbibliography[heading=bibintoc, filter=scientific, title={\bibliographytitle}]\clearpage
-\printbibliography[heading=bibintoc, keyword={online}, title={Online References}]\clearpage
-\printbibliography[heading=bibintoc, keyword={image}, title={Image References}]\clearpage
-
-%----------------------------------------------------------------------------------------
-%	APPENDICES
-%----------------------------------------------------------------------------------------
-
-\addtocontents{toc}{\vspace{2em}} % Add a gap in the Contents, for aesthetics
-\appendix % Starts of appendices
-
-\numberedchapter
-\input{appendix/appendixA}
-%\input{MainText/appendixB}
-%\input{MainText/appendixC}
+\bibliography{references/report_bibliography}
+\bibliographystyle{ieeetr}
+\addcontentsline{toc}{chapter}{Bibliography}
 
 \end{document}  
